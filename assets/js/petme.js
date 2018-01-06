@@ -29,7 +29,7 @@ $("#submitSearch").on("click", function(e){
 	stateSelection = $("#stateSelector").val();
 	animalSelection = $("#animalType").val();
 
-	var queryURL = "http://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=100&output=full&format=json"
+	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=100&output=full&format=json"
 	var settings = {
 		url: queryURL,
 		method: "GET",

@@ -38,12 +38,27 @@
 		<!-- Search Bar -->
 		<div class="row">
 			<form class="col s12">
-				<div class="row">
-					<div class="input-field col s12">
-						<input type="text" name="initialSearch" class="validate">
-						<label for="initialSearch" data-error="wrong" data-success="right">Doggo/Floof</label>
-					</div>
-				</div>
+				<div class="input-field col s12">
+					<form>
+    					<select name="animalType" id="animalType">
+      						<option value="" disabled selected>Choose your option</option>
+      						<option value="dog">Dogs</option>
+      						<option value="cat">Cats</option>
+      						<option value="bird">Birds</option>
+      						<option value="reptile">Reptiles</option>
+      						<option value="smallFurry">Small Furries</option>
+    					</select>
+    					<label>Select Animal Type</label>
+    				
+    					<div class="input-field col s6" style="padding-left: 0; display: flex;">
+          					<input placeholder="City" id="city" type="text" class="validate" style="margin-right: 10px;">
+          					<select id="stateSelector">
+          					</select>
+        				</div>
+        				<button class="btn waves-effect waves-light" type="submit" name="action" id="submitSearch">Submit</button>
+					</form>
+  				</div>
+
 			</form>
 		</div>
 

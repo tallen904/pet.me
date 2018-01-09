@@ -25,11 +25,12 @@ var animalSelection;
 
 $("#submitSearch").on("click", function(e){
 	e.preventDefault();
+	$("#searchResults").empty();
 	citySelection = $("#city").val();
 	stateSelection = $("#stateSelector").val();
 	animalSelection = $("#animalType").val();
 
-	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=100&output=full&format=json"
+	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
 	var settings = {
 		url: queryURL,
 		method: "GET",
@@ -40,7 +41,53 @@ $("#submitSearch").on("click", function(e){
 
 	$.ajax(settings)
 	.done(function(json){
-		console.log(json);
+		console.log(JSON.stringify(json))
+		var results = json.petfinder.pets.pet;
+		console.log(json)
+		for (var i = 0; i < results.length; i++){
+			var photos = results[i].media.photos.photo[3].$t;
+			var newCard = $("<div>");
+			$("#searchResults").append(newCard);
+			newCard.addClass("col x13 m12");
+			newCard.css("width", "33.3%")
+			var cardDiv = $("<div>");
+			cardDiv.addClass("card");
+			newCard.append(cardDiv);
+			var imgDiv = $("<div>");
+			imgDiv.addClass("card-image");
+			cardDiv.append(imgDiv);
+			var cardImg = $("<img>");
+			cardImg.attr("height", 250);
+			cardImg.attr("src", photos);
+			cardImg.addClass("materialboxed");
+			var cardTitle = $("<span>")
+			cardTitle.addClass("card-title");
+			cardTitle.text(results[i].name.$t);
+			cardTitle.css("color", "white");
+			cardTitle.css("position", "absolute");
+			cardTitle.css("top", 0);
+			cardDiv.append(cardTitle);
+			imgDiv.append(cardImg);
+			var cardContent = $("<div>");
+			cardContent.addClass("card-content");
+			cardDiv.append(cardContent);
+			var gender = $("<p>");
+			gender.text("Gender: " + results[i].sex.$t);
+			var breed = $("<p>");
+			if (results[i].breeds.breed.length > 1){
+				breed.text("Breed: " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
+			} else {
+				breed.text("Breed: " + results[i].breeds.breed.$t);
+			}
+			cardContent.append(gender);
+			cardContent.append(breed);
+			var cardAction = $("<div>");
+			cardAction.addClass("card-action");
+			cardDiv.append(cardAction);
+			var cardLink = $("<a>");
+			cardLink.attr("href", "#");
+			cardAction.append(cardLink);
+		}
 	})
 })
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Map View</title>
 	<link href="https://fonts.googleapis.com/css?family=Barlow" rel="stylesheet">
 
@@ -33,15 +34,10 @@
 	
 	<!-- No Container for this section, since we want the maps and result to span the full width -->
 	<div class="row">
-		<div class="map col xl6">
-			<iframe
-			  width="700"
-			  height="700"
-			  frameborder="0" style="border:0"
-			  src="https://www.google.com/maps/embed/v1/search?key=AIzaSyCmqFIQQNaS_8-7FZNXZJz8fR7tZ1DytU4&q=92123" allowfullscreen>
-			</iframe>
+		<div class="col l12 xl6" id="map" style="height: 700px;">
 		</div>
-		<div class="info-bar col xl6" style="position: absolute; right: 0px; overflow: auto; width: 750px; height:700px;">
+		<!-- Mobile is not working, may need to add in media queries to fix overlaid search results on map -->
+		<div class="info-bar col l12 xl6" style="position: absolute; right: 0px; overflow: auto; height:100%;">
 			<h3 style="text-align: center;">Paws In Your Area</h3>
 			<div class="row col xl12">
                 <div class="card horizontal col xl12">
@@ -52,7 +48,7 @@
                     </div>
                     <div class="card-stacked">
 	                    <div class="card-content">
-	                        <p>Hello, I am a big ol pupper.  Adopt Me!</p>                  
+	                        <p>Hello, I am a big ol pupper.  Adopt Me!</p>
 	                    </div>
 	                </div>
                 </div>
@@ -78,7 +74,7 @@
                     </div>
                     <div class="card-stacked">
 	                    <div class="card-content">
-	                        <p>Hello, I am a big ol pupper.  Adopt Me!</p>                  
+	                        <p>Hello, I am a big ol pupper.  Adopt Me!</p>        
 	                    </div>
 	                </div>
                 </div>
@@ -91,8 +87,75 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	<!-- Google Maps JS API -->
+	<script>
+		var map, infoWindow;
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: 32.853, lng: -117.183},
+				zoom: 12
+			});
+			infoWindow = new google.maps.InfoWindow;
+
+			// Try HTML5 geolocation.
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+
+					infoWindow.setPosition(pos);
+					infoWindow.setContent('Location found.');
+					infoWindow.open(map);
+					map.setCenter(pos);
+				}, function() {
+					handleLocationError(true, infoWindow, map.getCenter());
+				});
+			} else {
+				// Browser doesn't support Geolocation
+				handleLocationError(false, infoWindow, map.getCenter());
+			}
+
+			function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+				infoWindow.setPosition(pos);
+			    infoWindow.setContent(browserHasGeolocation ?
+			        				'Error: The Geolocation service failed.' :
+			        				'Error: Your browser doesn\'t support geolocation.');
+			    infoWindow.open(map);
+			}
+
+			// Create an array of alphabetical characters used to label the markers.
+	        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+	        // Add some markers to the map.
+	        // Note: The code uses the JavaScript Array.prototype.map() method to
+	        // create an array of markers based on a given "locations" array.
+	        // The map() method here has nothing to do with the Google Maps API.
+	        var markers = locations.map(function(location, i) {
+	          return new google.maps.Marker({
+	            position: location,
+	            label: labels[i % labels.length]
+	          });
+	        });
+
+	        // Add a marker clusterer to manage the markers.
+	        var markerCluster = new MarkerClusterer(map, markers,
+	            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+		}
+
+			//TEST PLS REMOVE TY
+			var locations = [
+			{lat: 32.718339, lng: -117.156070}];
+
+	</script>
 	<!-- JS -->
 	<script type="text/javascript" src="./assets/js/petme.js"></script>
+	<!-- Google Maps API Call -->
+	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+	</script>
+	<script async defer 
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmqFIQQNaS_8-7FZNXZJz8fR7tZ1DytU4&callback=initMap"></script>
 
 
 </body>

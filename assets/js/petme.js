@@ -56,6 +56,8 @@ var citySelection;
 var stateSelection;
 var animalSelection;
 var breedSelection;
+var genderSelection;
+var ageSelection;
 
 
 
@@ -66,14 +68,24 @@ $("#submitSearch").on("click", function(e){
 	stateSelection = $("#stateSelector").val();
 	animalSelection = $("#animalType").val();
 	breedSelection = $("#breedSelector").val();
+	genderSelection = $("#genderSelector").val();
+	ageSelection = $("#ageSelector").val();
 
-	var queryURL;
-
-	if (breedSelection === ""){
-		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
-	} else {
-		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&count=20&output=full&format=json"
+	if (!genderSelection){
+		genderSelection = "";
 	}
+
+	if (!ageSelection){
+		ageSelection = "";
+	}
+
+	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&age=" + ageSelection + "&sex=" + genderSelection + "&count=20&output=full&format=json"
+
+	// if (breedSelection === ""){
+	// 	queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
+	// } else {
+	// 	queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&age=" + ageSelection + "&sex=" + genderSelection + "&count=20&output=full&format=json"
+	// }
 	var settings = {
 		url: queryURL,
 		method: "GET",
@@ -102,7 +114,7 @@ $("#submitSearch").on("click", function(e){
 			var cardImg = $("<img>");
 			cardImg.attr("height", 250);
 			cardImg.attr("src", photos);
-			var pawImg = $("<img id='moveRight' src='./assets/images/PawPrintOutline.png' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
+			var pawImg = $("<img class='moveRight' src='./assets/images/PawPrintOutline.png' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
 			var cardTitle = $("<span>")
 			cardTitle.addClass("card-title");
 			cardTitle.text(results[i].name.$t);
@@ -134,4 +146,3 @@ $("#submitSearch").on("click", function(e){
 		}
 	})
 })
-

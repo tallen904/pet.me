@@ -6,3 +6,29 @@ nav {
 	width: 150px;
 	height: 64px;
 }
+
+.genderSelector {
+	display: flex;
+	justify-content: space-around;
+}
+
+#breedDiv {
+	margin-top: 0 !important;
+}
+
+.genderDiv {
+	position: relative;
+}
+
+.select-wrapper, .ageSelector {
+	padding-left: 0 !important;
+}
+
+.ageSelector {
+	margin-top: 15px;
+	position: relative;
+}
+
+.state, .city {
+	position: relative;
+}

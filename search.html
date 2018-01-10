@@ -44,13 +44,19 @@
 					<form>
     					<select name="animalType" id="animalType" required>
       						<option value="" disabled selected>Choose your option</option>
-      						<option value="dog">Dogs</option>
-      						<option value="cat">Cats</option>
-      						<option value="bird">Birds</option>
-      						<option value="reptile">Reptiles</option>
-      						<option value="smallFurry">Small Furries</option>
+      						<option value="dog" id="dogSelected">Dogs</option>
+      						<option value="cat" id="catSelected">Cats</option>
+      						<option value="bird" id="birdSelected">Birds</option>
+      						<option value="reptile" id="reptileSelected">Reptiles</option>
+      						<option value="smallFurry" id="smallFurrySelected">Small and Furry</option>
     					</select>
     					<label>Select Animal Type</label>
+						
+						<div class="input-field col s6" id="breedDiv">
+    						<select id="breedSelector">
+    							<option value="" disabled selected>Breed</option>
+    						</select>
+    					</div>
     				
     					<div class="input-field col s6" style="padding-left: 0; display: flex;">
           					<input placeholder="City" id="city" type="text" class="validate" style="margin-right: 10px;" required>
@@ -139,7 +145,6 @@
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<!-- Materialize JS -->
-	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<!-- JS -->
 	<script type="text/javascript" src="./assets/js/petme.js"></script>

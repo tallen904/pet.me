@@ -2,7 +2,6 @@ $(document).ready(function() {
     $('select').material_select();
 });
 
-
 // Generate States Dropdown
 
 var states = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
@@ -10,10 +9,41 @@ var stateSelector = $("#stateSelector");
 
 for (var i = 0; i < states.length; i++){
 	var newOption = $("<option>");
-	newOption.attr("value", states[i])
+	newOption.attr("value", states[i]);
 	newOption.append(states[i]);
 	stateSelector.append(newOption);
 }
+
+// Generate Breeds Dropdown
+
+var breedsSpecific;
+var breedSelector = $("#breedSelector")
+
+$("#animalType").on("change", function(){
+	$("#breedSelector").empty();
+	var breedSelected = $(this).val();
+	$.ajax({
+		url: "https://api.petfinder.com/breed.list?key=f2d74c99d5bc5124b40b57a6aaade29e&animal=" + breedSelected + "&format=json",
+		method: "GET",
+		jsonp: "callback",
+		dataType: "jsonp"
+	}).done(function(json){
+		var breeds = json.petfinder.breeds.breed
+		breedsSpecific = breeds.map(function(breed){
+			return breed["$t"]
+		})
+		console.log(breedsSpecific)
+		console.log(breeds);
+		for (var i = 0; i < breedsSpecific.length; i++){
+			console.log(breedsSpecific[i])
+			var newOption = $("<option>");
+			newOption.attr("value", breedsSpecific[i]);
+			newOption.append(breedsSpecific[i]);
+			breedSelector.append(newOption);
+		}
+		breedSelector.material_select();
+	})
+})
 
 // AJAX Request
 
@@ -59,7 +89,6 @@ $("#submitSearch").on("click", function(e){
 			var cardImg = $("<img>");
 			cardImg.attr("height", 250);
 			cardImg.attr("src", photos);
-			cardImg.addClass("materialboxed");
 			var cardTitle = $("<span>")
 			cardTitle.addClass("card-title");
 			cardTitle.text(results[i].name.$t);

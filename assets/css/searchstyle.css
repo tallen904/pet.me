@@ -6,3 +6,8 @@ nav {
 	width: 150px;
 	height: 64px;
 }
+
+#moveRight {
+	margin-left: 200px;
+	margin-top: 10px;
+}

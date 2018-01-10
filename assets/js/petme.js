@@ -89,6 +89,7 @@ $("#submitSearch").on("click", function(e){
 			var cardImg = $("<img>");
 			cardImg.attr("height", 250);
 			cardImg.attr("src", photos);
+			var pawImg = $("<img id='moveRight' src='./assets/images/PawPrintOutline.png' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
 			var cardTitle = $("<span>")
 			cardTitle.addClass("card-title");
 			cardTitle.text(results[i].name.$t);
@@ -97,6 +98,7 @@ $("#submitSearch").on("click", function(e){
 			cardTitle.css("top", 0);
 			cardDiv.append(cardTitle);
 			imgDiv.append(cardImg);
+			imgDiv.append(pawImg);
 			var cardContent = $("<div>");
 			cardContent.addClass("card-content");
 			cardDiv.append(cardContent);

@@ -41,6 +41,7 @@ $("#animalType").on("change", function(){
 			newOption.append(breedsSpecific[i]);
 			breedSelector.append(newOption);
 		}
+		breedSelector.material_select();
 	})
 })
 

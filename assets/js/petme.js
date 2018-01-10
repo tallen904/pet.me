@@ -21,9 +21,14 @@ var breedSelector = $("#breedSelector")
 
 $("#animalType").on("change", function(){
 	$("#breedSelector").empty();
-	var breedSelected = $(this).val();
+	var animalSelected = $(this).val();
+	var breedDefault = $("<option>")
+	breedDefault.attr("value", "");
+	breedDefault.attr("selected");
+	breedDefault.attr("disabled");
+	breedSelector.append(breedDefault);
 	$.ajax({
-		url: "https://api.petfinder.com/breed.list?key=f2d74c99d5bc5124b40b57a6aaade29e&animal=" + breedSelected + "&format=json",
+		url: "https://api.petfinder.com/breed.list?key=f2d74c99d5bc5124b40b57a6aaade29e&animal=" + animalSelected + "&format=json",
 		method: "GET",
 		jsonp: "callback",
 		dataType: "jsonp"
@@ -50,6 +55,7 @@ $("#animalType").on("change", function(){
 var citySelection;
 var stateSelection;
 var animalSelection;
+var breedSelection;
 
 
 
@@ -59,8 +65,15 @@ $("#submitSearch").on("click", function(e){
 	citySelection = $("#city").val();
 	stateSelection = $("#stateSelector").val();
 	animalSelection = $("#animalType").val();
+	breedSelection = $("#breedSelector").val();
 
-	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
+	var queryURL;
+
+	if (breedSelection === ""){
+		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
+	} else {
+		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&count=20&output=full&format=json"
+	}
 	var settings = {
 		url: queryURL,
 		method: "GET",
@@ -75,7 +88,7 @@ $("#submitSearch").on("click", function(e){
 		var results = json.petfinder.pets.pet;
 		console.log(json)
 		for (var i = 0; i < results.length; i++){
-			var photos = results[i].media.photos.photo[3].$t;
+			var photos = results[i].media.photos.photo[2].$t;
 			var newCard = $("<div>");
 			$("#searchResults").append(newCard);
 			newCard.addClass("col x13 m12");

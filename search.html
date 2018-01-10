@@ -42,7 +42,7 @@
 			<form class="col s12">
 				<div class="input-field col s12">
 					<form>
-    					<select name="animalType" id="animalType" required>
+    					<select name="animalType" id="animalType" class="col s4" required>
       						<option value="" disabled selected>Choose your option</option>
       						<option value="dog" id="dogSelected">Dogs</option>
       						<option value="cat" id="catSelected">Cats</option>
@@ -50,19 +50,44 @@
       						<option value="reptile" id="reptileSelected">Reptiles</option>
       						<option value="smallFurry" id="smallFurrySelected">Small and Furry</option>
     					</select>
-    					<label>Select Animal Type</label>
-						
-						<div class="input-field col s6" id="breedDiv">
+    					<label>Animal Type (Required)</label>
+    					<div class="col s4 genderDiv">
+							<select name="gender" id="genderSelector">
+								<option value="" selected disabled>Gender</option>
+								<option value="M">Male</option>
+								<option value="F">Female</option>
+							</select>
+							<label>Gender (Optional)</label>
+						</div>
+						<div class="input-field col s3" id="breedDiv" style="padding-left: 0">
     						<select id="breedSelector">
     							<option value="" disabled selected>Breed</option>
     						</select>
+    						<label style="left: 0">Select Breed (Optional)</label>
+    					</div>
+
+    					<div class="col s2 ageSelector">
+    						<select id="ageSelector">
+    							<option value="" disabled selected>Age</option>
+    							<option value="Baby">Baby</option>
+    							<option value="Young">Young</option>
+    							<option value="Adult">Adult</option>
+    							<option value="Senior">Senior</option>
+    						</select>
+    						<label style="left: 0">Age (Optional)</label>
     					</div>
     				
-    					<div class="input-field col s6" style="padding-left: 0; display: flex;">
+    					<div class="input-field col s6 city" style="padding-left: 0; display: flex;">
           					<input placeholder="City" id="city" type="text" class="validate" style="margin-right: 10px;" required>
-          					<select id="stateSelector">
-          						<option value="" disabled selected>State</option>
-          					</select>
+          					<label style="left: 0">City (Required)</label>
+
+          					<div class="state">
+          						<select id="stateSelector" required>
+          							<option value="" disabled selected>State</option>
+          						</select>
+								<label style="left: 0">State (Required)</label>
+							</div>
+
         				</div>
         				<button class="btn waves-effect waves-light" type="submit" name="action" id="submitSearch">Submit</button>
 					</form>

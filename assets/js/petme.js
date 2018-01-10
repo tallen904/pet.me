@@ -89,7 +89,7 @@ $("#submitSearch").on("click", function(e){
 			var cardImg = $("<img>");
 			cardImg.attr("height", 250);
 			cardImg.attr("src", photos);
-			var pawImg = $("<img id='moveRight' src='./assets/images/PawPrintOutline.png' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
+			var pawImg = $("<img class='moveRight' src='./assets/images/PawPrintOutline.png' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
 			var cardTitle = $("<span>")
 			cardTitle.addClass("card-title");
 			cardTitle.text(results[i].name.$t);
@@ -118,6 +118,11 @@ $("#submitSearch").on("click", function(e){
 			var cardLink = $("<a>");
 			cardLink.attr("href", "#");
 			cardAction.append(cardLink);
+
+			//click function for paw print
+			$(".moveRight").on("click", function(event){
+				$(this).attr("src", "./assets/images/OrangePawPrint.png");
+			})
 		}
 	})
 })

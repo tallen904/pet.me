@@ -104,7 +104,8 @@ $("#submitSearch").on("click", function(e){
 			var newCard = $("<div>");
 			$("#searchResults").append(newCard);
 			newCard.addClass("col x13 m12");
-			newCard.css("width", "33.3%")
+			newCard.css("width", "25%")
+			newCard.css("max-height", "420px")
 			var cardDiv = $("<div>");
 			cardDiv.addClass("card");
 			newCard.append(cardDiv);
@@ -128,14 +129,21 @@ $("#submitSearch").on("click", function(e){
 			cardContent.addClass("card-content");
 			cardDiv.append(cardContent);
 			var gender = $("<p>");
-			gender.text("Gender: " + results[i].sex.$t);
+			if (results[i].sex.$t === "M"){
+				gender.html("<strong>Gender:</strong> Male");
+			} else {
+				gender.html("<strong>Gender:</strong> Female");
+			}
+			var age = $("<p>");
+			age.html("<strong>Age:</strong> " + results[i].age.$t);
 			var breed = $("<p>");
 			if (results[i].breeds.breed.length > 1){
-				breed.text("Breed: " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
+				breed.html("<strong>Breed:</strong> " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
 			} else {
-				breed.text("Breed: " + results[i].breeds.breed.$t);
+				breed.html("<strong>Breed:</strong> " + results[i].breeds.breed.$t);
 			}
 			cardContent.append(gender);
+			cardContent.append(age);
 			cardContent.append(breed);
 			var cardAction = $("<div>");
 			cardAction.addClass("card-action");

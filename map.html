@@ -144,9 +144,63 @@
 	            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 		}
 
-			//TEST PLS REMOVE TY
+
+		// Placeholder URLs
+		var queryUrl = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=San%20Diego%20CA&animal=dog&count=10&output=full&format=json"
+		var shelterUrl = "http://api.petfinder.com/shelter.get?key=f2d74c99d5bc5124b40b57a6aaade29e&format=json&id="
+
+		var querySettings = {
+			url: queryUrl,
+			method: 'GET',
+			jsonp: 'callback',
+			dataType: 'jsonp'
+		}
+
+		var shelterSettings = {
+			method: 'GET',
+			jsonp: 'callback',
+			dataType: 'jsonp'
+		}
+
+		console.log(queryUrl);
+
+		//TEST PLS REMOVE TY
 			var locations = [
-			{lat: 32.718339, lng: -117.156070}];
+			{lat: 32.718339, lng: -117.156070}, // test
+			];
+
+		//Petfinder API call for location
+		$.ajax(querySettings)
+			.done(function(searchResults){
+				//get the search results
+				var petsArray = searchResults.petfinder.pets.pet
+
+				//loop through
+				for ( i = 0; i < petsArray.length; i++){
+					//build second API call to get shelter location info and add to shelterSettings Obj
+					var shelterQuery = shelterUrl + petsArray[i].shelterId.$t;
+					shelterSettings['url'] = shelterQuery;
+					//second call
+					$.ajax(shelterSettings)
+						.done(function(shelterResult){
+							//get vals
+							var latitude = shelterResult.petfinder.shelter.latitude.$t;
+							var longitude = shelterResult.petfinder.shelter.longitude.$t;
+
+							//create obj to append
+							var location = {
+								lat: latitude,
+								lng: longitude
+							}
+
+							//push on to the locations array
+							locations.push(location);
+							console.log(locations);
+						});
+				}
+			});
+
+
 
 	</script>
 	<!-- JS -->

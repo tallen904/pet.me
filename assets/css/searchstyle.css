@@ -38,6 +38,12 @@ nav {
 	margin-top: 3%;
 }
 
+.card-title {
+	color: white;
+	position: absolute;
+	top: 0;
+}
+
 #submitSearch {
 	margin: 10px;
 }

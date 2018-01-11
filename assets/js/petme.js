@@ -103,7 +103,7 @@ var ageSelection;
 							  "<div class='card'>" +
 								  "<div class='card-image'>" +	
 								  	"<img style='height:250px' src='"+ petPhoto +"'/>" +
-								  	"<img onclick='favoritePet((this)," + petId + ", &quot;" + petName + "&quot;, " + "&quot;" + petGender + "&quot;, " + "&quot;" + petBreed + "&quot;, " + "&quot;" + petPhoto + "&quot;, " + true + ")' class='moveRight' src='" + pawPhoto + "' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />" +
+								  	"<img onclick='favoritePet((this)," + petId + ", &quot;" + petName + "&quot;, " + "&quot;" + petGender + "&quot;, " + "&quot;" + petBreed + "&quot;, " + "&quot;" + petPhoto + "&quot;, " + "&quot;" + petAge + "&quot;, " + true + ")' class='moveRight' src='" + pawPhoto + "' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />" +
 								  	"<span class='card-title'>" + petName + "</span>" + 
 								  "</div>" +
 								  "<div class='card-content'>" +
@@ -122,8 +122,8 @@ var ageSelection;
 	}
 
 	//click function for paw print
-	function favoritePet (event, petId, petName, petGender, petBreed, photos, age, isFavorite) {
-		var onClickFunction = "favoritePet((this)," + petId + ",'" + petName + "','" + petGender + "','" + petBreed + "','" + photos + "'," + age + "',"+ !isFavorite + ");";
+	function favoritePet (event, petId, petName, petGender, petBreed, photos, petAge, isFavorite) {
+		var onClickFunction = "favoritePet((this)," + petId + ",'" + petName + "','" + petGender + "','" + petBreed + "','" + photos + "'," + petAge + "',"+ !isFavorite + ");";
 		var database = firebase.database();
 		
 		if (isFavorite) {
@@ -224,7 +224,7 @@ $("#submitSearch").on("click", function(e){
 				var cardImg = $("<img>");
 				cardImg.attr("height", 250);
 				cardImg.attr("src", photos);
-				var pawImg = $("<img onclick='favoritePet((this)," + results[i].id.$t + ", &quot;" + results[i].name.$t + "&quot;, " + "&quot;" + results[i].sex.$t + "&quot;, " + "&quot;" + petBreed + "&quot;, " + "&quot;" + photos + "&quot;, " + isFavorite + ")' class='moveRight' src='" + pawPhoto + "' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
+				var pawImg = $("<img onclick='favoritePet((this)," + results[i].id.$t + ", &quot;" + results[i].name.$t + "&quot;, " + "&quot;" + results[i].sex.$t + "&quot;, " + "&quot;" + petBreed + "&quot;, " + "&quot;" + photos + "&quot;, " + "&quot;" + petAge + "&quot;, " + isFavorite + ")' class='moveRight' src='" + pawPhoto + "' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
 				var cardTitle = $("<span>")
 				cardTitle.addClass("card-title");
 				
@@ -249,6 +249,8 @@ $("#submitSearch").on("click", function(e){
 		        } else {
 		          gender.html("<strong>Gender:</strong> Female");
 		        }
+        		
+        		var petAge = results[i].age.$t;
         		var age = $("<p>");
 			  	age.html("<strong>Age:</strong> " + results[i].age.$t);
 				var breed = $("<p>");

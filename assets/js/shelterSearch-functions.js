@@ -551,6 +551,335 @@ function SearchResult(shelterID,petArray) {
 
 
 
+
+
+var color = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#c94cba"];
+
+function plotPetAges(petQueryResultArray) {
+  var labels = [];
+
+  //CREATING THE LABEL NAMES
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    labels.push(search.shelterName)
+  }
+
+  var dataset = [];
+
+  //DATA FOR BABY
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.age.baby);
+  }
+  var data = {
+    label: "baby",
+    backgroundColor: color[0],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR YOUNG
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.age.young);
+  }
+  var data = {
+    label: "young",
+    backgroundColor: color[1],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR ADULT
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.age.adult);
+  }
+  var data = {
+    label: "adult",
+    backgroundColor: color[2],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR SENIOR
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.age.senior);
+  }
+  var data = {
+    label: "senior",
+    backgroundColor: color[3],
+    data: count
+  }
+  dataset.push(data);
+
+
+  new Chart(document.getElementById("chart-age"), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: dataset,
+    }, //data: {
+    options: {
+      title: {
+        display: true,
+        text: 'Pets by Age'
+      }
+    } //options: {
+  }); //new Chart(document.getElementById("bar-chart-grouped"), {
+}; //function plotPetTypes(petQueryResultArray) {
+
+
+
+function plotPetTypes(petQueryResultArray) {
+  var labels = [];
+
+  //CREATING THE LABEL NAMES
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    labels.push(search.shelterName)
+  }
+
+  var dataset = [];
+
+  //DATA FOR DOGS
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.type.dog);
+  }
+  var data = {
+    label: "Dog",
+    backgroundColor: color[0],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR CATS
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.type.cat);
+  }
+  var data = {
+    label: "Cat",
+    backgroundColor: color[1],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR BIRDS
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.type.bird);
+  }
+  var data = {
+    label: "Bird",
+    backgroundColor: color[2],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR SMALL & FURRY
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.type.smallFurry);
+  }
+  var data = {
+    label: "Small & Furry",
+    backgroundColor: color[3],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR REPTILE
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.type.reptile);
+  }
+  var data = {
+    label: "Reptile",
+    backgroundColor: color[4],
+    data: count
+  }
+  dataset.push(data);
+
+
+  new Chart(document.getElementById("chart-type"), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: dataset,
+    }, //data: {
+    options: {
+      title: {
+        display: true,
+        text: 'Pets by Type'
+      }
+    } //options: {
+  }); //new Chart(document.getElementById("bar-chart-grouped"), {
+}; //function plotPetTypes(petQueryResultArray) {
+
+function plotPetSizes(petQueryResultArray) {
+  var labels = [];
+
+  //CREATING THE LABEL NAMES
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    labels.push(search.shelterName)
+  }
+
+  var dataset = [];
+
+  //DATA FOR SMALL
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.size.small);
+  }
+  var data = {
+    label: "Small",
+    backgroundColor: color[0],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR Medium
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.size.medium);
+  }
+  var data = {
+    label: "Medium",
+    backgroundColor: color[1],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR Large
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.size.large);
+  }
+  var data = {
+    label: "Large",
+    backgroundColor: color[2],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR Extra Large
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.size.extraLarge);
+  }
+  var data = {
+    label: "Extra Large",
+    backgroundColor: color[3],
+    data: count
+  }
+  dataset.push(data);
+
+
+
+  new Chart(document.getElementById("chart-size"), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: dataset,
+    }, //data: {
+    options: {
+      title: {
+        display: true,
+        text: 'Pets by Size'
+      }
+    } //options: {
+  }); //new Chart(document.getElementById("bar-chart-grouped"), {
+}; //function plotPetTypes(petQueryResultArray) {
+
+
+function plotPetOptions(petQueryResultArray) {
+  var labels = [];
+
+  //CREATING THE LABEL NAMES
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    labels.push(search.shelterName)
+  }
+
+  var dataset = [];
+
+  //DATA FOR SMALL
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.option.altered);
+  }
+  var data = {
+    label: '"Fixed"',
+    backgroundColor: color[0],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR Medium
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.option.shots);
+  }
+  var data = {
+    label: "Has Shots",
+    backgroundColor: color[1],
+    data: count
+  }
+  dataset.push(data);
+
+  //DATA FOR Large
+  var count = [];
+  for (var i=0; i < petQueryResultArray.length; i++) {
+    var search = petQueryResultArray[i];
+    count.push(search.option.trained);
+  }
+  var data = {
+    label: "Trained",
+    backgroundColor: color[2],
+    data: count
+  }
+  dataset.push(data);
+
+
+
+  new Chart(document.getElementById("chart-options"), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: dataset,
+    }, //data: {
+    options: {
+      title: {
+        display: true,
+        text: 'Pets by Size'
+      }
+    } //options: {
+  }); //new Chart(document.getElementById("bar-chart-grouped"), {
+}; //function plotPetTypes(petQueryResultArray) {
+
+
 function plotCharts() {
   console.log(petQueryResultArray);
+  plotPetAges(petQueryResultArray);
+  plotPetTypes(petQueryResultArray);
+  plotPetSizes(petQueryResultArray);
 }

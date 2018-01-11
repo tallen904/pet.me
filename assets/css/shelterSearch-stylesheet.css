@@ -1,0 +1,62 @@
+.table-style {
+    border: 1px solid black;
+    font-family: rial, Verdana, sans-serif;
+	border-collapse: collapse;
+	font-weight: lighter;
+}
+
+.td-name-style {
+	word-wrap: break-word;
+	max-width: 125px;
+	font-size:	9px;
+	font-weight: normal;
+}
+
+.td-contact-style {
+	font-size:	9px;
+	font-weight: lighter;
+}
+
+.td-address-style {
+	font-size:	9px;
+	font-weight: lighter;
+}
+
+.tr-header-style {
+	padding: 4px;
+	border: 1px solid #CCC;
+	font-size:	9px;
+	background-color: black;
+	color: white;
+}
+
+.tr-style ,.td-style, .th-style {
+	padding: 4px;
+	border: 1px solid #CCC;
+}
+
+.tr-default-background-color {
+	background-color: white;
+}
+
+.hover-color {
+	background-color: rgba(251,252,170,1);
+}
+
+.select-color {
+	background-color: rgba(21,162,54,1);
+	color: rgba(245,245,245,1);
+}
+
+.submit-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+}
+

@@ -22,9 +22,14 @@ var breedSelector = $("#breedSelector")
 
 $("#animalType").on("change", function(){
 	$("#breedSelector").empty();
-	var breedSelected = $(this).val();
+	var animalSelected = $(this).val();
+	var breedDefault = $("<option>")
+	breedDefault.attr("value", "");
+	breedDefault.attr("selected");
+	breedDefault.attr("disabled");
+	breedSelector.append(breedDefault);
 	$.ajax({
-		url: "https://api.petfinder.com/breed.list?key=f2d74c99d5bc5124b40b57a6aaade29e&animal=" + breedSelected + "&format=json",
+		url: "https://api.petfinder.com/breed.list?key=f2d74c99d5bc5124b40b57a6aaade29e&animal=" + animalSelected + "&format=json",
 		method: "GET",
 		jsonp: "callback",
 		dataType: "jsonp"
@@ -51,6 +56,7 @@ $("#animalType").on("change", function(){
 var citySelection;
 var stateSelection;
 var animalSelection;
+var breedSelection;
 
 	//function to get favorites on page load
 	function getFavorites (callback) {
@@ -145,14 +151,22 @@ $("#submitSearch").on("click", function(e){
 	citySelection = $("#city").val();
 	stateSelection = $("#stateSelector").val();
 	animalSelection = $("#animalType").val();
+	breedSelection = $("#breedSelector").val();
 
-	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
+	var queryURL;
+
+	if (breedSelection === ""){
+		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
+	} else {
+		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&count=20&output=full&format=json"
+	}
 	var settings = {
 		url: queryURL,
 		method: "GET",
 		jsonp: "callback",
 		dataType: "jsonp"
 	}
+<<<<<<< HEAD
 	//console.log(queryURL);
 	
 	// Get list of favorites from Firebase before building cards
@@ -232,6 +246,50 @@ $("#submitSearch").on("click", function(e){
 
 				var currentResult = results[i]
 
+=======
+	console.log(queryURL);
+
+	$.ajax(settings)
+	.done(function(json){
+		console.log(JSON.stringify(json))
+		var results = json.petfinder.pets.pet;
+		console.log(json)
+		for (var i = 0; i < results.length; i++){
+			var photos = results[i].media.photos.photo[2].$t;
+			var newCard = $("<div>");
+			$("#searchResults").append(newCard);
+			newCard.addClass("col x13 m12");
+			newCard.css("width", "33.3%")
+			var cardDiv = $("<div>");
+			cardDiv.addClass("card");
+			newCard.append(cardDiv);
+			var imgDiv = $("<div>");
+			imgDiv.addClass("card-image");
+			cardDiv.append(imgDiv);
+			var cardImg = $("<img>");
+			cardImg.attr("height", 250);
+			cardImg.attr("src", photos);
+			var pawImg = $("<img class='moveRight' src='./assets/images/PawPrintOutline.png' style='height: 32px; width: auto; position: absolute; top: 0; z-index: 10' />");
+			var cardTitle = $("<span>")
+			cardTitle.addClass("card-title");
+			cardTitle.text(results[i].name.$t);
+			cardTitle.css("color", "white");
+			cardTitle.css("position", "absolute");
+			cardTitle.css("top", 0);
+			cardDiv.append(cardTitle);
+			imgDiv.append(cardImg);
+			imgDiv.append(pawImg);
+			var cardContent = $("<div>");
+			cardContent.addClass("card-content");
+			cardDiv.append(cardContent);
+			var gender = $("<p>");
+			gender.text("Gender: " + results[i].sex.$t);
+			var breed = $("<p>");
+			if (results[i].breeds.breed.length > 1){
+				breed.text("Breed: " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
+			} else {
+				breed.text("Breed: " + results[i].breeds.breed.$t);
+>>>>>>> 1c9770425b8c38727ec197dc4b6511d788845a60
 			}
 		})
 

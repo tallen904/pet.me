@@ -882,4 +882,5 @@ function plotCharts() {
   plotPetAges(petQueryResultArray);
   plotPetTypes(petQueryResultArray);
   plotPetSizes(petQueryResultArray);
+  plotPetOptions(petQueryResultArray);
 }

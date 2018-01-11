@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
 	<!-- CSS -->
-		<link rel="stylesheet" type="text/css" href="./assets/css/indexstyle.css">
+		<link rel="stylesheet" type="text/css" href="./assets/css/searchstyle.css">
 
 	<!-- jQuery -->
 	  <script
@@ -19,7 +19,7 @@
  		crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body onload="displayFavorites();">
 	<!-- Navbar -->
 	<nav>
 	    <div class="nav-wrapper">
@@ -28,7 +28,7 @@
 	        <li><a href="#">Home</a></li>
 	        <li><a href="./search.html">Search</a></li>
 	        <li><a href="./map.html">Near Me</a></li>
-	        <li><a href="#">Favorites</a>
+	        <li><a href="./favorites.html">Favorites</a>
 	        <li><a href="./notifications.html">Notifications</a></li>
 	      </ul>
 	    </div>
@@ -36,18 +36,34 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="favorites">
-			</div>
+			<h1>Favorites</h1>
+		</div>
+		<div class="row" id="favorites">
 		</div>
 	</div>
 
 
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<!-- Compiled and minified JavaScript -->
+	<!-- Materialize JS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<!-- JS -->
 	<script type="text/javascript" src="./assets/js/petme.js"></script>
+
+	<!-- firebase -->
+	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyCg7N1f8glrQMC3-l3zZy6qdDeOfn2UI7E",
+	    authDomain: "petme-4a73e.firebaseapp.com",
+	    databaseURL: "https://petme-4a73e.firebaseio.com",
+	    projectId: "petme-4a73e",
+	    storageBucket: "petme-4a73e.appspot.com",
+	    messagingSenderId: "717335289934"
+	  };
+	  firebase.initializeApp(config);
+	</script>
 
 </body>
 </html>

@@ -96,6 +96,7 @@ var ageSelection;
 				var petBreed = favoritesObject[petId].breed;
 				var petGender = favoritesObject[petId].gender;
 				var petPhoto = favoritesObject[petId].petImage;
+				var petAge = favoritesObject[petId].age;
 				var pawPhoto = "./assets/images/OrangePawPrint.png";
 
 				var tag = "<div class='col x13 m12' style='width:33.3%'>" +
@@ -106,8 +107,9 @@ var ageSelection;
 								  	"<span class='card-title'>" + petName + "</span>" + 
 								  "</div>" +
 								  "<div class='card-content'>" +
-							  		"<p>Gender: " + petGender + "</p>" +
-								  	"<p>Breed: " + petBreed + "</p>" +
+							  		"<p><strong>Gender: </strong>" + petGender + "</p>" +
+							  		"<p><strong>Age: </strong>" + petAge + "</p>" +
+								  	"<p><strong>Breed: </strong>" + petBreed + "</p>" +
 								  "</div>" +
 								  "<div class='card-action'>" +
 							  		"<a href='#'>Link</a>" +
@@ -120,8 +122,8 @@ var ageSelection;
 	}
 
 	//click function for paw print
-	function favoritePet (event, petId, petName, petGender, petBreed, photos, isFavorite) {
-		var onClickFunction = "favoritePet((this)," + petId + ",'" + petName + "','" + petGender + "','" + petBreed + "','" + photos + "'," + !isFavorite + ");";
+	function favoritePet (event, petId, petName, petGender, petBreed, photos, age, isFavorite) {
+		var onClickFunction = "favoritePet((this)," + petId + ",'" + petName + "','" + petGender + "','" + petBreed + "','" + photos + "'," + age + "',"+ !isFavorite + ");";
 		var database = firebase.database();
 		
 		if (isFavorite) {
@@ -139,7 +141,8 @@ var ageSelection;
 				name: petName,
 				gender: petGender,
 				breed: petBreed,
-				petImage: photos
+				petImage: photos,
+				age: petAge
 			})
 		}
 	}
@@ -210,8 +213,8 @@ $("#submitSearch").on("click", function(e){
 				var newCard = $("<div>");
 				$("#searchResults").append(newCard);
 				newCard.addClass("col x13 m12");
-			  newCard.css("width", "25%")
-			  newCard.css("max-height", "420px")
+				newCard.css("width", "25%")
+				newCard.css("max-height", "420px")
 				var cardDiv = $("<div>");
 				cardDiv.addClass("card");
 				newCard.append(cardDiv);
@@ -242,20 +245,20 @@ $("#submitSearch").on("click", function(e){
 				//create variable for gender type
 				var genderType = results[i].sex.$t
 				if (results[i].sex.$t === "M"){
-          gender.html("<strong>Gender:</strong> Male");
-        } else {
-          gender.html("<strong>Gender:</strong> Female");
-        }
-        var age = $("<p>");
-			  age.html("<strong>Age:</strong> " + results[i].age.$t);
+		          gender.html("<strong>Gender:</strong> Male");
+		        } else {
+		          gender.html("<strong>Gender:</strong> Female");
+		        }
+        		var age = $("<p>");
+			  	age.html("<strong>Age:</strong> " + results[i].age.$t);
 				var breed = $("<p>");
 				if (results[i].breeds.breed.length > 1){
-          breed.html("<strong>Breed:</strong> " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
-        } else {
-          breed.html("<strong>Breed:</strong> " + results[i].breeds.breed.$t);
-        }
+		          breed.html("<strong>Breed:</strong> " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
+		        } else {
+		          breed.html("<strong>Breed:</strong> " + results[i].breeds.breed.$t);
+		        }
 				cardContent.append(gender);
-        cardContent.append(age);
+        		cardContent.append(age);
 				cardContent.append(breed);
 				var cardAction = $("<div>");
 				cardAction.addClass("card-action");

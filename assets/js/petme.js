@@ -54,6 +54,8 @@ var citySelection;
 var stateSelection;
 var animalSelection;
 var breedSelection;
+var genderSelection;
+var ageSelection;
 
 	//function to get favorites on page load
 	function getFavorites (callback) {
@@ -149,14 +151,32 @@ $("#submitSearch").on("click", function(e){
 	stateSelection = $("#stateSelector").val();
 	animalSelection = $("#animalType").val();
 	breedSelection = $("#breedSelector").val();
+	genderSelection = $("#genderSelector").val();
+	ageSelection = $("#ageSelector").val();
 
-	var queryURL;
-
-	if (breedSelection === ""){
-		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
-	} else {
-		queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&count=20&output=full&format=json"
+	if (!genderSelection){
+		genderSelection = "";
 	}
+
+	if (!ageSelection){
+		ageSelection = "";
+	}
+
+	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&age=" + ageSelection + "&sex=" + genderSelection + "&count=20&output=full&format=json"
+
+	// if (breedSelection === ""){
+	// 	queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&count=20&output=full&format=json"
+	// } else {
+	// 	queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&age=" + ageSelection + "&sex=" + genderSelection + "&count=20&output=full&format=json"
+	// }
+	var settings = {
+		url: queryURL,
+		method: "GET",
+		jsonp: "callback",
+		dataType: "jsonp"
+	}
+	var queryURL = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=" + citySelection + "%20" + stateSelection + "&animal=" + animalSelection + "&breed=" + breedSelection + "&age=" + ageSelection + "&sex=" + genderSelection + "&count=20&output=full&format=json"
+
 	var settings = {
 		url: queryURL,
 		method: "GET",
@@ -164,7 +184,6 @@ $("#submitSearch").on("click", function(e){
 		dataType: "jsonp"
 	}
 
-	
 	// Get list of favorites from Firebase before building cards
 	getFavorites(function(favoritesList, favoritesObject){
 
@@ -191,7 +210,8 @@ $("#submitSearch").on("click", function(e){
 				var newCard = $("<div>");
 				$("#searchResults").append(newCard);
 				newCard.addClass("col x13 m12");
-				newCard.css("width", "33.3%")
+			  newCard.css("width", "25%")
+			  newCard.css("max-height", "420px")
 				var cardDiv = $("<div>");
 				cardDiv.addClass("card");
 				newCard.append(cardDiv);
@@ -221,14 +241,21 @@ $("#submitSearch").on("click", function(e){
 
 				//create variable for gender type
 				var genderType = results[i].sex.$t
-				gender.text("Gender: " + genderType);
+				if (results[i].sex.$t === "M"){
+          gender.html("<strong>Gender:</strong> Male");
+        } else {
+          gender.html("<strong>Gender:</strong> Female");
+        }
+        var age = $("<p>");
+			  age.html("<strong>Age:</strong> " + results[i].age.$t);
 				var breed = $("<p>");
 				if (results[i].breeds.breed.length > 1){
-					breed.text("Breed: " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
-				} else {
-					breed.text("Breed: " + results[i].breeds.breed.$t);
-				}
+          breed.html("<strong>Breed:</strong> " + results[i].breeds.breed[0].$t + "/" + results[i].breeds.breed[1].$t);
+        } else {
+          breed.html("<strong>Breed:</strong> " + results[i].breeds.breed.$t);
+        }
 				cardContent.append(gender);
+        cardContent.append(age);
 				cardContent.append(breed);
 				var cardAction = $("<div>");
 				cardAction.addClass("card-action");
@@ -245,4 +272,3 @@ $("#submitSearch").on("click", function(e){
 
 
 })
-

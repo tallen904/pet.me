@@ -37,9 +37,9 @@
 		<div class="col l12 xl6" id="map" style="height: 700px;">
 		</div>
 		<!-- Mobile is not working, may need to add in media queries to fix overlaid search results on map -->
-		<div class="info-bar col l12 xl6" style="position: absolute; right: 0px; overflow: auto; height:100%;">
-			<h3 style="text-align: center;">Paws In Your Area</h3>
-			<div class="row col xl12">
+		<div class="info-bar col l12 xl6" style="overflow: auto; height: 700px;">
+			<h3 class="center-align">Paws In Your Area</h3>
+			<div class="row" id="search">
                 <div class="card horizontal col xl12">
                     <!-- Image Card has image, text and link to external adoption site/more information page -->
                     <div class="card-image">
@@ -89,8 +89,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<!-- Google Maps JS API -->
 	<script>
-		var map, infoWindow;
 		function initMap() {
+			var map, infoWindow, geocoder, pos;
 			//creating a map
 			map = new google.maps.Map(document.getElementById('map'), {
 				center: {lat: 32.853, lng: -117.183},
@@ -102,11 +102,13 @@
 				}
 			});
 			infoWindow = new google.maps.InfoWindow;
+			geocoder = new google.maps.Geocoder;
+
 
 			// Try HTML5 geolocation.
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
-					var pos = {
+					pos = {
 						lat: position.coords.latitude,
 						lng: position.coords.longitude
 					};
@@ -131,12 +133,17 @@
 			    infoWindow.open(map);
 			}
 
+			function generateQuery() {
+				var baseUrl = 'https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&output=full&format=json&'
+
+
+				//make api call to collect city and state/ zip code for the query
+			}
+
 			//creating markers for use in map
 
 			// Placeholder URLs
 			var queryUrl = "https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&location=San%20Diego%20CA&animal=dog&count=10&output=full&format=json"
-			var shelterUrl = "http://api.petfinder.com/shelter.get?key=f2d74c99d5bc5124b40b57a6aaade29e&format=json&id="
-
 			//establish objs for api calls
 			var querySettings = {
 				url: queryUrl,
@@ -145,26 +152,24 @@
 				dataType: 'jsonp'
 			}
 
-			var shelterSettings = {
-				method: 'GET',
-				jsonp: 'callback',
-				dataType: 'jsonp'
-			}
+			function setMarkers(array){
+				//create locations array that will set the markers
+				var locations = [];
 
-			console.log(queryUrl);
+				//loop through given array
+					for ( i = 0; i < array.length; i++ ){
+						//shelter url base
+						var shelterUrl = "http://api.petfinder.com/shelter.get?key=f2d74c99d5bc5124b40b57a6aaade29e&format=json&id="
 
-			var locations = [];
+						//set params for call
+						var shelterSettings = {
+							method: 'GET',
+							jsonp: 'callback',
+							dataType: 'jsonp'
+						}
 
-			//Petfinder API call for location
-			$.ajax(querySettings)
-				.done(function(searchResults){
-					//get the search results
-					var petsArray = searchResults.petfinder.pets.pet
-
-					//loop through
-					for ( i = 0; i < petsArray.length; i++){
 						//build second API call to get shelter location info and add to shelterSettings Obj
-						var shelterQuery = shelterUrl + petsArray[i].shelterId.$t;
+						var shelterQuery = shelterUrl + array[i].shelterId.$t;
 						shelterSettings['url'] = shelterQuery;
 						//second call
 						$.ajax(shelterSettings)
@@ -182,28 +187,118 @@
 								//push on to the locations array
 								locations.push(location);
 
-								// Create an array of alphabetical charaxcters used to label the markers.
-						        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
 								// Add some markers to the map.
 								// Note: The code uses the JavaScript Array.prototype.map() method to
 								// create an array of markers based on a given "locations" array.
 								// The map() method here has nothing to do with the Google Maps API.
 								var markers = locations.map(function(location, i) {
-									console.log(location);
 								  return new google.maps.Marker({
-								    position: location,
-								    label: labels[i % labels.length]
+								    position: location
 								  });
 								});
-
 
 								// Add a marker clusterer to manage the markers.
 								var markerCluster = new MarkerClusterer(map, markers,
 								    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 							});
 					}
+			}
+
+			function createCards(array){
+				for ( var i = 0; i < array.length; i++ ){
+					//create paw icon
+					var paw = $('<img>').attr('class', 'moveRight')
+						.attr('src', './assets/images/PawPrintOutline.png')
+						.attr('style', 'height: 32px; width: auto; position: absolute; top: 0; z-index: 10;');
+
+					//gather data
+					var pet = array[i];
+					var petName = pet.name.$t;
+					var petImgSrc = pet.media.photos.photo[3].$t;
+					var petSex = ((pet.sex.$t === 'M') ? 'Male' : 'Female');
+					var petAge = pet.age.$t;
+					var petBreed = '';
+					var breedArray = pet.breeds.breed;
+					for ( var j = 0; j < breedArray.length; j++ ){
+						petBreed += (breedArray[j].$t + ' ');
+					}
+
+					if (petBreed === '') {petBreed = 'N/A'};
+
+					console.log(petBreed);
+
+
+					//generate wrapper div
+					var card = $('<div>').attr('class', 'card horizontal col xl12');
+
+					//generate inner wrappers
+					var cardImg = $('<div>').attr('class', 'card-image');
+					var cardStack = $('<div>').attr('class', 'card-stacked');
+
+					//image
+					//card image tag
+					var img = $('<img>').attr('src', petImgSrc);
+					//append onto card image div
+					cardImg.append(img);
+					cardImg.append(paw);
+					//insert back into card div
+					card.append(cardImg);
+
+					//Name Span
+					var name = $('<span>').attr('class', 'card-title')
+						.attr('style', 'color: white; position: absolute; top: 0px;')
+						.text(petName);
+					//append back to card
+					card.append(name);
+
+					//card content
+					var gender = $('<p>');
+					var genderText = $('<strong>').text('Gender: ' + petSex);
+					gender.append(genderText);
+
+					var age = $('<p>');
+					var ageText = $('<strong>').text('Age: ' + petAge);
+					age.append(ageText);
+
+					var breed = $('<p>');
+					var breedText = $('<strong>').text('Breed: ' + petBreed);
+					breed.append(breedText);
+
+					//append onto cardStack
+					cardStack.append(gender).append(age).append(breed);
+
+					//insert back into the parent
+					card.append(cardStack);
+
+					//append into the results
+					$('#search').append(card);
+				}
+
+			}
+
+			//Petfinder API call for pets
+			$.ajax(querySettings)
+				.done(function(searchResults){
+					//get the search results
+					var petsArray = searchResults.petfinder.pets.pet
+
+					//put them on the map
+					setMarkers(petsArray);
+
+					//display them in the search results
+					createCards(petsArray);
 				});
+
+			// //marker onclick
+			// markers.addListener('click', function() {
+			// 	selectedPos = marker.getPosition();
+			// 	console.log(selectedPos);
+			// 	//center with matching results on the left
+			// 	map.setZoom(12);
+			// 	map.setCenter(selectedPos);
+
+			// 	//display location information (Shelter)
+			// });
 		}
 
 

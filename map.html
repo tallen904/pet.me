@@ -39,47 +39,28 @@
 		<!-- Mobile is not working, may need to add in media queries to fix overlaid search results on map -->
 		<div class="info-bar col l12 xl6" style="overflow: auto; height: 700px;">
 			<h3 class="center-align">Paws In Your Area</h3>
-			<div class="row" id="search">
-                <div class="card horizontal col xl12">
-                    <!-- Image Card has image, text and link to external adoption site/more information page -->
-                    <div class="card-image">
-                        <img class="materialboxed" src="https://i.imgur.com/QewANh4.jpg" height="250">
-                        <span class="card-title">Doggo</span>
-                    </div>
-                    <div class="card-stacked">
-	                    <div class="card-content">
-	                        <p>Hello, I am a big ol pupper.  Adopt Me!</p>
-	                    </div>
-	                </div>
-                </div>
-
-                <div class="card horizontal col xl12">
-                    <!-- Image Card has image, text and link to external adoption site/more information page -->
-                    <div class="card-image">
-                        <img class="materialboxed" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg" height="250">
-                        <span class="card-title">Doggo</span>
-                    </div>
-                    <div class="card-stacked">
-	                    <div class="card-content">
-	                        <p>Hello, I am a big ol pupper.  Adopt Me!</p>                  
-	                    </div>
-	                </div>
-                </div>
-
-                <div class="card horizontal col xl12">
-                    <!-- Image Card has image, text and link to external adoption site/more information page -->
-                    <div class="card-image">
-                        <img class="materialboxed" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg" height="250">
-                        <span class="card-title">Doggo</span>
-                    </div>
-                    <div class="card-stacked">
-	                    <div class="card-content">
-	                        <p>Hello, I am a big ol pupper.  Adopt Me!</p>        
-	                    </div>
-	                </div>
-                </div>
-
+			<div class="select-wrapper col xl8">
+				<span class="caret">▼</span>
+				<input type="text" class="select-dropdown" readonly="true" data-activates="select-options-c9a3dd20-a9ad-dde6-c78d-8e1f9528e2c0" value="Choose your option">
+				<ul id="select-options-c9a3dd20-a9ad-dde6-c78d-8e1f9528e2c0" class="dropdown-content select-dropdown ">
+					<li class="disabled "><span>Choose your option</span></li>
+					<li class=""><span>Dogs</span></li>
+					<li class=""><span>Cats</span></li>
+					<li class=""><span>Birds</span></li>
+					<li class=""><span>Reptiles</span></li>
+					<li class=""><span>Small and Furry</span></li>
+				</ul>
+				<select name="animalType" id="animalType" class="col xl8 initialized" required="" data-select-id="c9a3dd20-a9ad-dde6-c78d-8e1f9528e2c0">
+					<option value="" disabled="" selected="">Choose your option</option>
+					<option value="dog" id="dogSelected">Dogs</option>
+					<option value="cat" id="catSelected">Cats</option>
+					<option value="bird" id="birdSelected">Birds</option>
+					<option value="reptile" id="reptileSelected">Reptiles</option>
+					<option value="smallFurry" id="smallFurrySelected">Small and Furry</option>
+			    </select>
 			</div>
+			<a class="waves-effect waves-light btn offset-xl8">Submit</a>
+			<div class="row" id="search"></div>
 		</div>
 	</div>
 
@@ -89,6 +70,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<!-- Google Maps JS API -->
 	<script>
+		$(document).ready(function() {
+
+		    $('select').material_select();
+		});
+
 		function initMap() {
 			var map, infoWindow, geocoder, pos;
 			//creating a map
@@ -134,10 +120,13 @@
 			}
 
 			function generateQuery() {
-				var baseUrl = 'https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&output=full&format=json&'
+				var baseUrl = 'https://api.petfinder.com/pet.find?key=f2d74c99d5bc5124b40b57a6aaade29e&output=full&format=json&count=30&'
 
 
-				//make api call to collect city and state/ zip code for the query
+				//city and state for the query
+				//generated from the user location.
+
+
 			}
 
 			//creating markers for use in map
@@ -207,7 +196,7 @@
 			function createCards(array){
 				for ( var i = 0; i < array.length; i++ ){
 					//create paw icon
-					var paw = $('<img>').attr('class', 'moveRight')
+					var paw = $('<img>').attr('class', 'moveRight paw')
 						.attr('src', './assets/images/PawPrintOutline.png')
 						.attr('style', 'height: 32px; width: auto; position: absolute; top: 0; z-index: 10;');
 
@@ -237,7 +226,7 @@
 
 					//image
 					//card image tag
-					var img = $('<img>').attr('src', petImgSrc);
+					var img = $('<img>').attr('src', petImgSrc).attr('style', 'height: 250px;');
 					//append onto card image div
 					cardImg.append(img);
 					cardImg.append(paw);
@@ -246,7 +235,7 @@
 
 					//Name Span
 					var name = $('<span>').attr('class', 'card-title')
-						.attr('style', 'color: white; position: absolute; top: 0px;')
+						.attr('style', 'color: white; position: absolute; bottom: 0px;')
 						.text(petName);
 					//append back to card
 					card.append(name);
@@ -289,7 +278,7 @@
 					createCards(petsArray);
 				});
 
-			// //marker onclick
+			// //marker onclick -- needs work
 			// markers.addListener('click', function() {
 			// 	selectedPos = marker.getPosition();
 			// 	console.log(selectedPos);
@@ -300,7 +289,6 @@
 			// 	//display location information (Shelter)
 			// });
 		}
-
 
 	</script>
 	<!-- JS -->

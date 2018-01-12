@@ -120,7 +120,7 @@ var ageSelection;
 
 	//click function for paw print
 	function favoritePet (event, petId, petName, petGender, petBreed, photos, petAge, isFavorite) {
-		var onClickFunction = "favoritePet((this)," + petId + ",'" + petName + "','" + petGender + "','" + petBreed + "','" + photos + "'," + petAge + "',"+ !isFavorite + ");";
+		var onClickFunction = "favoritePet((this)," + petId + ",'" + petName + "','" + petGender + "','" + petBreed + "','" + photos + "','" + petAge + "',"+ !isFavorite + ");";
 		var database = firebase.database();
 		
 		if (isFavorite) {

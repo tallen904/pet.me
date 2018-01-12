@@ -25,8 +25,7 @@ var petArrayQuery = new Array();
 
 
 $( document ).ready(function() {
-	shelterQueryObj = new ShelterQueryLocation('92110');
-	shelterQueryObj.updateHTMLtable();
+	
 
 
 }); //$( document ).ready(function() {

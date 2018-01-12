@@ -870,7 +870,7 @@ function plotPetOptions(petQueryResultArray) {
     options: {
       title: {
         display: true,
-        text: 'Pets by Size'
+        text: 'Pets by Options'
       }
     } //options: {
   }); //new Chart(document.getElementById("bar-chart-grouped"), {
@@ -884,3 +884,9 @@ function plotCharts() {
   plotPetSizes(petQueryResultArray);
   plotPetOptions(petQueryResultArray);
 }
+
+$("#locationSubmitButton").on("click",function() {
+  var location = $("#locationShelterQuery").val();
+  shelterQueryObj = new ShelterQueryLocation(location);
+  shelterQueryObj.updateHTMLtable();
+});

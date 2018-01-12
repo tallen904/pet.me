@@ -886,7 +886,15 @@ function plotCharts() {
 }
 
 $("#locationSubmitButton").on("click",function() {
+  clearCharts()
   var location = $("#locationShelterQuery").val();
   shelterQueryObj = new ShelterQueryLocation(location);
   shelterQueryObj.updateHTMLtable();
 });
+
+function clearCharts() {
+  $("#chart-age").empty();
+  $("#chart-size").empty();
+  $("#chart-age").empty();
+  $("#chart-age").empty();
+}

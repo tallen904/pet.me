@@ -99,7 +99,7 @@ var ageSelection;
 				var petAge = favoritesObject[petId].age;
 				var pawPhoto = "./assets/images/OrangePawPrint.png";
 
-				var tag = "<div class='col x13 m12' style='width:33.3%'>" +
+				var tag = "<div class='col x13 m12' style='width:25%; max-height: 420px'>" +
 							  "<div class='card'>" +
 								  "<div class='card-image'>" +	
 								  	"<img style='height:250px' src='"+ petPhoto +"'/>" +
@@ -110,9 +110,6 @@ var ageSelection;
 							  		"<p><strong>Gender: </strong>" + petGender + "</p>" +
 							  		"<p><strong>Age: </strong>" + petAge + "</p>" +
 								  	"<p><strong>Breed: </strong>" + petBreed + "</p>" +
-								  "</div>" +
-								  "<div class='card-action'>" +
-							  		"<a href='#'>Link</a>" +
 								  "</div>" +
 							  "</div>" +
 						  "</div>"
@@ -276,4 +273,5 @@ $("#submitSearch").on("click", function(e){
 
 
 
+})
 })

@@ -10,6 +10,8 @@
 
 	<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="./assets/css/indexstyle.css">
+		<link rel="stylesheet" href="assets/css/shelterSearch-stylesheet.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 	<!-- jQuery -->
 	  <script
@@ -33,6 +35,24 @@
 	    </div>
 	</nav>
 
+	<!-- HTML GOODNESS HERE -->
+	<div class="body-container">
+		<div class="column left">
+			<label for="locationShelterQuery">Zip Code or City</label>
+			<input placeholder="San Diego, CA" id="locationShelterQuery">
+          	  <button id="locationSubmitButton" class="btn waves-effect waves-light my-button" type="submit" name="action"><i class="material-icons right">Submit</i></button><br><br>
+			<div id="table"></div>
+			
+			<button id="submit-button" class="submit-button">Search</button>
+		</div>
+
+		<div class="column right">
+			<canvas class="plot-style" id="chart-age"></canvas>
+			<canvas class="plot-style" id="chart-size" width="500" height="300"></canvas>
+			<canvas class="plot-style" id="chart-options" width="500" height="300"></canvas>
+			<canvas class="plot-style" id="chart-type" width="500" height="300"></canvas>
+		</div>
+	</div>
 
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -40,6 +60,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<!-- JS -->
 	<script type="text/javascript" src="./assets/js/petme.js"></script>
+	<script src="assets/js/shelterSearch-functions.js"></script>
+	<script src="assets/js/shelterSearch-script.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-</body>
+	</body>
 </html>

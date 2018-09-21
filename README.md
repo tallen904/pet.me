@@ -1,7 +1,8 @@
 # pet.me
+Pet.Me Website for Project #1
 
-## Description
+Pet Adoption application. Allows users to filter and sort through specified breeds, location, etc. Leverages the PetFinder and Google Maps API. Built using HTML, CSS, JS, JQuery, Chart.JS, Firebase, and Materialize.
 
-pet.me is a custom built website that utilizes the Petfinder and Google Maps APIs.  This website makes it easier for pet adopters to find adoptable pets.  The site was built using HTML, CSS, JS, JQuery, Chart.JS, Firebase, and Materialize.
+## Quick Note
 
-<img width="1404" alt="screen shot 2018-03-02 at 10 53 24 pm" src="https://user-images.githubusercontent.com/31232038/36931542-c33eb5ce-1e6c-11e8-929d-2c4423651108.png">
+Unfortunately due to the pricing implementation for the Google Maps Javascript API, the maps portion of the website is not working properly.
